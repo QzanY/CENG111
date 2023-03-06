@@ -1,0 +1,19 @@
+#Q7
+def lis(ls):
+    index = 0
+    l = len(ls)
+    max_counter = 0
+    counter = 1
+    while index<l-1:
+        if ls[index] <= ls[index+1]:
+            counter +=1
+            index +=1
+        else:
+            if counter > max_counter:
+                max_counter = counter
+                counter = 1
+                index +=1
+            else:
+                counter = 1
+                index +=1
+    return max_counter

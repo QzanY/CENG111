@@ -1,0 +1,156 @@
+#Q1
+def fibseries(N):
+    if N ==1:
+        return [0]
+    elif N == 2:
+        return [0,1]
+    else:
+        return fibseries(N-1)+[fibseries(N-1)[-1]+fibseries(N-2)[-1]]
+
+
+#Q2
+def myrange(S,E,J):
+    if E-S<=0:
+        return []
+    else:
+        return [S]+myrange(S+J,E,J)
+
+
+#Q3
+def count_item(N,ls):
+    if N==ls[0] and len(ls)==1:
+        return 1
+    elif N!=ls[0] and len(ls)==1:
+        return 0
+    else:
+        if N==ls[0]:
+            return 1 + count_item(N,ls[1:])
+        else:
+            return 0 + count_item(N,ls[1:])
+
+
+#Q4
+def keep_numbers(ls):
+    if ((type(ls[0]) == int) or (type(ls[0])==float)) and len(ls) ==1:
+        return [ls[0]]
+    elif (((type(ls[0] == int) or (type(ls[0])==float))) != 0) and ((len(ls))==1):
+          return []
+    else:
+        if (type(ls[0]) == int) or (type(ls[0])==float):
+            return [ls[0]] + keep_numbers(ls[1:])
+        else:
+            return keep_numbers(ls[1:])
+
+
+#Q5
+def keep(func,listt):
+    if len(listt)==0:
+        return []
+    elif func(listt[0])==True:
+        return [listt[0]]+keep(func,listt[1:])
+    else:
+        return keep(func,listt[1:])
+
+
+#Q6
+def every(func,listt):
+    if len(listt)==0:
+        return []
+    else:
+        return [func(listt[0])]+every(func,listt[1:])
+        
+
+#Q7
+def remove_item(N,listt):
+    if len(listt)==0:
+        return []
+    else:
+        if N == listt[0]:
+            return remove_item(N,listt[1:])
+        else:
+            return [listt[0]] + remove_item(N,listt[1:])
+            
+
+#Q8
+def letter_pairs(st):
+    if len(st)==2:
+        return [st]
+    else:
+        return [st[0:2]]+letter_pairs(st[1:])
+
+
+#Q9
+def progressive_square(ls):
+    if len(ls) == 2:
+        if ls[1] == ls[0]**2:
+            return True
+        else:
+            return False
+    else:
+        if ls[-1] == ls[-2]**2:
+            return True and progressive_square(ls[0:-1])
+        else:
+            return False
+
+
+#Q10
+def sum_numbers(ls):
+    if ((type(ls[0]) == int) or (type(ls[0])==float)) and len(ls) ==1:
+        return ls[0]
+    elif (((type(ls[0] == int) or (type(ls[0])==float))) != 0) and ((len(ls))==1):
+          return 0
+    else:
+        if (type(ls[0]) == int) or (type(ls[0])==float):
+            return ls[0] + sum_numbers(ls[1:])
+        else:
+            return sum_numbers(ls[1:])
+      
+      
+#Q11
+def slice_helper(ls,start,end,step):
+    if end-start<=0 or end-start>=abs(len(ls)):
+        return []
+    else:
+        return [ls[start]]+slice_helper(ls,start+step,end,step)
+    
+def slice(ls,start,end,step):
+    if step<0:
+        if end-start>=abs(len(ls)):
+            return []
+        else:
+            return [ls[start]] + slice(ls,start+step,end,step)
+    else:
+        if end-start<=0 or (end>=len(ls) and start >= len(ls)):
+            return []
+        else:
+            return [ls[start]]+slice(ls,start+step,end,step)
+            
+            
+#Q12
+def helper(s1,s2,index):
+    if index > len(s2)-len(s1):
+        return False
+    else:
+        if s1 == s2[index:index+len(s1)]:
+            return True
+        else:
+            return helper(s1,s2,index+1)
+def is_substring(s1,s2):
+    return helper(s1,s2,0)
+    
+ 
+#Q13
+def helper(st,index):
+    if len(st)==0:
+        return []
+    elif index <=len(st):
+        return [st[:index]]+helper(st,index+1)
+    else:
+        return helper(st[1:],1)
+    
+def substrings(st):
+    return helper(st,index=1)
+
+
+
+

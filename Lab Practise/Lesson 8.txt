@@ -1,0 +1,66 @@
+#Q2
+def schedule(Queue):
+    res = []
+    index = 1
+    for item in Queue:
+        if index> item[0]:
+            res.append(item)
+            continue
+        index+=1
+    return res
+
+
+#Q3
+def fixsorted1(ls):
+    store = CreateStack()
+    result = CreateStack()
+    index = 0
+    l = len(ls)
+    kontrol = False
+    while index != l-1:
+        if ls[index] > ls[index+1]:
+            kontrol = True
+            PushStack(ls[index],store)
+        else:
+            if kontrol:
+                PushStack(ls[index],store)
+                kontrol = False
+            else:
+                if len(store) == 0:
+                    PushStack(ls[index],result)
+                else:
+                    for i in range(len(store)):
+                        PushStack(TopStack(store),result)
+                        PopStack(store)
+                    PushStack(ls[index],result)
+        index += 1
+    if len(store)!=0:
+        PushStack(ls[-1],store)
+        for i in range(len(store)):
+            PushStack(TopStack(store),result)
+            PopStack(store)
+    return result
+    
+def fixsorted(ls):
+    result = CreateStack()
+    store = CreateStack()
+    PushStack(ls[0],result)
+    l = len(ls)
+    index = 1
+    while index != l:
+        if ls[index] < TopStack(result):
+            while ls[index] < TopStack(result):
+                PushStack(TopStack(result),store)
+                PopStack(result)
+            PushStack(ls[index],result)
+            while len(store) != 0:
+                PushStack(TopStack(store),result)
+                PopStack(store)
+        else:
+            PushStack(ls[index],result)
+        index+=1
+    return result
+    
+    
+#Q4
+

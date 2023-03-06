@@ -1,0 +1,156 @@
+#Q1
+tree = [1,[10,[11,[4,[],[]],[5,[],[]]],[12,[6,[],[]],[]]],[20,[],[21,[7,[56,[],[]],[]],[8,[65,[],[]],[]]]]]
+
+
+#Q2
+def sum_tree(tree):
+    if isempty(tree):
+        return 0
+    else:
+        return datum(tree) + sum_tree(left(tree)) + sum_tree(right(tree))
+
+
+#Q3
+def inorder(tree):
+    if isempty(tree):
+        return []
+    else:
+        return inorder(left(tree)) + [datum(tree)] + inorder(right(tree))
+
+
+#Q4
+def isbinary(tree):
+    if isempty(tree):
+        return True
+    else:
+        return len(tree)==3 and isbinary(left(tree)) and isbinary(right(tree))
+
+
+#Q5
+def helper(tree,depth):
+    if isempty(tree) or isleaf(tree):
+        return depth
+    else:
+        li = []
+        for child in children(tree):
+            li.append(helper(child,depth+1))  
+        #return max(helper(left(tree),depth+1),helper(right(tree),depth+1))
+        return max(li)
+        
+def maxdepth(tree):
+    return helper(tree,1)
+
+
+#Q6
+def numparts(num):
+    if num == 1:
+        return [1]
+    if num % 2 == 0:
+        return makenode(num,numparts(num//2),numparts(num//2))
+    else:
+        return makenode(num,numparts(((num-1)//2)+1),numparts((num-1)//2))
+
+
+#Q7
+def checkmul(tree):
+    if isleaf(tree) or isempty(tree):
+        return True
+    else:
+        return datum(tree) == datum(left(tree))*datum(right(tree)) and checkmul(left(tree)) and checkmul(right(tree))
+
+
+#Q8
+def isordered(tree):
+    if isempty(tree):
+        return True
+    if isleaf(tree):
+        return True
+    else:
+        return datum(left(tree))<datum(tree) and datum(right(tree))>datum(tree) and isordered(left(tree)) and isordered(right(tree))
+
+
+#Q9
+def helper(tree,curr,road):
+    if isempty(tree):
+        return False
+    if curr == road[0]:
+        road = road[1:]
+        if road == "":
+            return True
+    if isleaf(tree):
+        return False
+    else:
+        if isempty(left(tree)):
+            return helper(right(tree),datum(right(tree)),road)
+        elif isempty(right(tree)):
+            return helper(left(tree),datum(left(tree)),road)
+        else:
+            return helper(left(tree),datum(left(tree)),road) or helper(right(tree),datum(right(tree)),road)
+
+def path_exists(tree,road):
+    curr = datum(tree)
+    return helper(tree,curr,road)
+
+
+#Q10
+def helper(tree,curr,summ,goal):
+    summ += curr
+    if isempty(tree):
+        return False
+    if summ == goal:
+        return True
+    if isleaf(tree):
+        return False
+    else:
+        if left(tree) == []:
+            return helper(right(tree),datum(right(tree)),summ,goal) or helper(right(tree),datum(right(tree)),0,goal)
+        elif right(tree) == []:
+            return helper(left(tree),datum(left(tree)),summ,goal) or helper(left(tree),datum(left(tree)),0,goal)
+        else:
+            return helper(left(tree),datum(left(tree)),summ,goal) or helper(right(tree),datum(right(tree)),summ,goal) or helper(left(tree),datum(left(tree)),0,goal) or helper(right(tree),datum(right(tree)),0,goal) or helper(left(tree),datum(left(tree)),datum(right(tree))+curr,goal) or helper(right(tree),datum(right(tree)),curr+datum(left(tree)),goal) 
+
+def path_has_sum(tree,goal):
+    return helper(tree,datum(tree),0,goal)
+
+
+
+#Q11
+def helper(tree,prev,curr):
+    if prev == None:
+        if isleaf(tree):
+            return True
+        else:
+            if isempty(left(tree)):
+                return helper(right(tree),curr,datum(right(tree)))
+            elif isempty(right(tree)):
+                return helper(left(tree),curr,datum(left(tree)))
+            else:
+                return helper(right(tree),curr,datum(right(tree))) or helper(left(tree),curr,datum(left(tree)))
+    else:
+        if isleaf(tree):
+            if prev < curr:
+                return True
+            else:
+                return False
+        if prev >= curr:
+            return False
+        else:
+            if isempty(left(tree)):
+                return helper(right(tree),curr,datum(right(tree)))
+            elif isempty(right(tree)):
+                return helper(left(tree),curr,datum(left(tree)))
+            else:
+                return helper(right(tree),curr,datum(right(tree))) or helper(left(tree),curr,datum(left(tree)))
+
+def increasing_path(tree):
+    return helper(tree,None,datum(tree))
+
+
+#Q12
+def build(tree):
+    if len(tree) == 1:
+        return tree[0]
+    if datum(tree) == 'list':
+        return [build(tree[1])]+[build(tree[2])]
+    elif datum(tree) == 'string':
+        return tree[1][0]+tree[2][0]

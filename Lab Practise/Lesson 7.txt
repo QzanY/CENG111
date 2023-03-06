@@ -1,0 +1,88 @@
+#Q1
+def divs(N):
+    ds=[]
+    for i in range(1,int(N**0.5)+1):
+        if N%i==0:
+            ds.append(i)
+            if N/i not in ds:
+                ds.append(int(N/i))
+    ds = sorted(ds)
+    ds.remove(ds[-1])
+    return ds
+
+
+def perfect_numbers(N):
+    L1 = []
+    L2 = []
+    L3 = []
+    for i in range(1,N):
+        if i == sum(divs(i)):
+            L1.append(i)
+        elif i < sum(divs(i)):
+            L2.append(i)
+        else:
+            L3.append(i)
+    return (L1,L2,L3)
+
+
+#Q2
+def fac(N):
+    if N == 1 or N == 0:
+        return 1
+    else:
+        return N*fac(N-1)
+
+def comb(N,M):
+    return fac(N)//(fac(N-M)*fac(M))
+
+def pascal(N):
+    ls = []
+    for i in range(0,N):
+        lss = []
+        for j in range(0,i+1):
+            lss.append(comb(i,j))
+        ls.append(lss)
+    return ls
+
+
+#Q3
+
+
+
+#Q4
+def split(st,dels):
+    ls=[]
+    word=""
+    index = 0
+    for char in st:
+        if char in dels:
+            if word !="":
+                ls.append(word)
+                word = ""
+                index+=1
+                continue
+        word+=char
+        if index==len(st)-1:
+            ls.append(word)
+        index+=1
+    return ls
+    
+    
+#Q5
+def hangman(word,guess,lives):
+    w_letters=list(word)
+    g_letters=list(guess)
+    for try_ in list(guess):
+        if try_ in w_letters:
+            w_letters.remove(try_)
+            g_letters.remove(g_letters[0])
+        else:
+            lives-=1
+            g_letters.remove(g_letters[0])
+            if lives<=0:
+                return 'lose'
+            if len(g_letters)==0:
+                return 'lose'
+        if len(w_letters)==0:
+            return 'win'
+    return 'lose'

@@ -1,0 +1,35 @@
+#Q1
+def branch(indexes,ls):
+    if ls == []:
+        return []
+    elif len(indexes)==1:
+        return ls[indexes[0]]
+    else:
+        return branch(indexes[1:],ls[indexes[0]])
+        
+
+#Q2
+
+
+#Q3
+def sum_all(ls):
+    if type(ls)==list:
+        if len(ls)==0:
+            return 0
+        return sum_all(ls[0]) + sum_all(ls[1:])
+    else:
+        return ls
+        
+      
+#Q4
+def reverse_lists(ls):
+    if type(ls) == list:
+        if len(ls) == 0:
+            return []
+        return [reverse_lists(ls[-1])]+ reverse_lists(ls[0:-1])
+    else:
+        return ls
+        
+        
+#Q5
+
